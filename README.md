@@ -14,6 +14,8 @@ stated otherwise and using the standard code -> build -> download.
 
 ## Projects
 
+* PIR-01 Monitor a PIR (proximity) sensor and buz a speaker and light a LED when movement is detected. Attached I/O as indicated by pin names.
+
 
 ## TODO
 
