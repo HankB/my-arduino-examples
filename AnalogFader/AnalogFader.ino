@@ -11,13 +11,15 @@
     center pin of the potentiometer to the analog input 0
     one side pin (either one) to ground
     the other side pin to +5V
-  - LED
-    anode (long leg) attached to digital output 13
-    cathode (short leg) attached to ground
+  - RGB LED
+    common ground (long leg) attached to ground
+    
+    anode (short legs) attached acordingly
+      red - digital output 11
+      green - digital output 10
+      blue - 9 (unused at present)
 
-  - Note: because most Arduinos have a built-in LED attached to pin 13 on the
-    board, the LED is optional.
-
+  Modified from a sketch
   created by David Cuartielles
   modified 30 Aug 2011
   By Tom Igoe
