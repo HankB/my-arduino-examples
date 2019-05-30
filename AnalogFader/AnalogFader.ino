@@ -27,28 +27,60 @@
   This example code is in the public domain.
 
   http://www.arduino.cc/en/Tutorial/AnalogInput
+
+  Further modified to use the levels intended for automotive voltage evaluation
+
 */
+
+const int high = 1000;
+const int good = 921;
+const int marginal = 887;
+const int bad = 682;
+const int spread = good - bad;
 
 int sensorPin =   A0;   // select the input pin for the potentiometer
 int redPin =      11;   // select the pin for the LED
 int sensorValue = 0;    // variable to store the value coming from the sensor
 int greenpin =    10;
 
-int red_pct = 15;
-int green_pct = 30;
+const int red_pct = 50;
+int green_pct = 50;
+int max_DAC   = 255;
 
 void setup() {
   // declare the ledPin as an OUTPUT:
   pinMode(redPin, OUTPUT);
   pinMode(greenpin, OUTPUT);
+  //Serial.begin(9600);
+
 }
 
 void loop() {
   // read the value from the sensor:
   sensorValue = analogRead(sensorPin);
-  // turn the ledPin off:
-  analogWrite(greenpin, ((sensorValue/4)*red_pct)/100);
-  analogWrite(redPin, (255-sensorValue/4)*green_pct/100);
-  // stop the program for for <sensorValue> milliseconds:
+  if(sensorValue >= good) {
+    analogWrite(greenpin, (max_DAC*green_pct)/100);
+    analogWrite(redPin, 0);
+    //Serial.print("good ");
+    //Serial.println(sensorValue);
+    }
+  else if(sensorValue < bad) {
+    analogWrite(greenpin, 0);
+    analogWrite(redPin, (max_DAC*red_pct)/100);
+    //Serial.print("bad ");
+    //Serial.println(sensorValue);
+  }
+  else {
+    int blend = (sensorValue-bad)*100/spread;  // calculate blend percent
+    analogWrite(greenpin, blend*max_DAC/100*green_pct/100);
+    analogWrite(redPin, (100-blend)*max_DAC/100*red_pct/100);
+    /*
+    Serial.print("between ");
+    Serial.print(sensorValue);
+    Serial.print(" "); Serial.print(blend);
+    Serial.print(" green "); Serial.print(blend*max_DAC/100);
+    Serial.print(" red "); Serial.println((max_DAC*(100-blend))/100);
+    */
+  }
   delay(10);
 }
