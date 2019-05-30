@@ -16,6 +16,7 @@ stated otherwise and using the standard code -> build -> download.
 
 * PIR-01 Monitor a PIR (proximity) sensor and buzz a speaker and light a LED when movement is detected. Attached I/O as indicated by pin names.
 * ToneRamp Drive a speaker tone from low to high frequency.
+* AnalogRamp - analog input determines RGB LED color.
 
 
 ## TODO
